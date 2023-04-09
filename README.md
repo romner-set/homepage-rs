@@ -1,8 +1,8 @@
-## code for my humble website
+## Code for my [humble website](https://myalpine.live)
 
-forked from https://github.com/jplatte/turbo.fish
+Styling & turbofish animations are from https://github.com/jplatte/turbo.fish. The code itself was completely rewritten in [https://yew.rs](yew), because why write HTML when you can write Rust?
 
-### how to run:
+### Commands to run:
 ```sh
 cargo install trunk
 rustup target add wasm32-unknown-unknown
