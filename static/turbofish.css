@@ -177,7 +177,7 @@ body.about {
     line-height: 150%;
 }
 
-.fish-body ul {
-    padding-left: 2ch;
-    list-style: '- ';
+.fish-body table {
+    padding-bottom: 2ch;
+    border-spacing: 1.5ch 0;
 }
