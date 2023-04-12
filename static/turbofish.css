@@ -94,8 +94,8 @@ f::before, f::after,
 i::before, i::after,
 s::before, s::after,
 h::before, h::after,
-body.not-found::before,
-body.not-found::after {
+.status-code-head::before,
+.status-code-head::after {
     content: '∶';
     order: -1;
     display: block;
@@ -115,7 +115,7 @@ f::after,
 i::after,
 s::after,
 h::after,
-body.not-found::after {
+.status-code-head::after {
     animation-delay: 0.05s;
     animation-direction: reverse;
 }
@@ -158,11 +158,14 @@ h.reverse::before, h.reverse::after {
     order: 1;
 }
 
-body.not-found {
+.status-code-body {font-size: 200%;}
+.status-code-head {
     flex-direction: row;
     justify-content: center;
     align-items: center;
     font-size: 400%;
+    display: flex;
+    padding-bottom: 0.25em;
 }
 
 turbofish {

@@ -46,7 +46,7 @@ fn Link(props: &LinkProps) -> Html {
 pub fn About() -> Html {
     let navigator = use_navigator().unwrap();
 
-    let onclick = Callback::from(move |_| navigator.push(&Route::Turbofish));
+    let onclick = Callback::from(move |_| navigator.push(&Route::Root));
     html! {
         <>
             <main>
