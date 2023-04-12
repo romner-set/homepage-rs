@@ -20,7 +20,7 @@ pub fn Turbofish(props: &TurbofishProps) -> Html {
     let onclick = Callback::from(move |_| navigator.push(&Route::About));
     html! {
         <>
-            <main class="pond" aria-description={"turbofishes swimming across the screen"}>
+            <main class="pond index" aria-description={"turbofishes swimming across the screen"}>
                 {
                     {"turbofish"}.chars().map(|c| html! {
                         <@{c.to_string()}>{format!("<{guts}>")}</@>
