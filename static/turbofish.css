@@ -27,31 +27,26 @@ body {
 footer {
     position: absolute;
     bottom: 0;
-    right: 0;
 
     padding: .5em;
     background-color: #222;
     border: solid #444;
-    border-width: 1px 0 0 1px;
     font-size: 1rem;
 }
-
-footer button {
-  background: none!important;
-  border: none;
-  color: #fff;
-  text-decoration: underline;
-  cursor: pointer;
+footer.left {
+    left: 0;
+    border-width: 1px 1px 0 0;
+}
+footer.right {
+    right: 0;
+    border-width: 1px 0 0 1px;
 }
 
 footer a {
     position: relative;
     color: #fff;
     transition: color .2s;
-}
-
-footer button:hover {
-    color: #ddd;
+    padding: 0.2em;
 }
 
 footer a:hover {

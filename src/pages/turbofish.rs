@@ -9,9 +9,6 @@ pub struct TurbofishProps {
 
 #[function_component()]
 pub fn Turbofish(props: &TurbofishProps) -> Html {
-    let navigator = use_navigator().unwrap();
-
-    let onclick = Callback::from(move |_| navigator.push(&Route::About));
     html! {
         <>
             <main class="pond" aria-description={"turbofishes swimming across the screen"}>
@@ -29,8 +26,12 @@ pub fn Turbofish(props: &TurbofishProps) -> Html {
                         ::<Html> /* Once again, the awe-inspiring Turbofish! */ ()
                 }}
             </main>
-            <footer>
-                <button {onclick}>{"what?"}</button>
+            <footer class="left">
+                <Link<Route> to={Route::Generic {path: format!("::<{}>", random::random_type())}}>{"random!"}</Link<Route>>
+                <a href="/">{"⟳"}</a>
+            </footer>
+            <footer class="right">
+                <Link<Route> to={Route::About}>{"what?"}</Link<Route>>
                 <a href="https://github.com/romner-set/turbo.fish">{"code."}</a>
             </footer>
         </>

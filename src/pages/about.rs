@@ -1,7 +1,7 @@
 use crate::*;
 
 #[derive(Properties, PartialEq)]
-pub struct LinkProps {
+pub struct ServiceLinkProps {
     #[prop_or_default]
     name: &'static str,
 
@@ -18,7 +18,7 @@ pub struct LinkProps {
 }
 
 #[function_component]
-fn Link(props: &LinkProps) -> Html {
+fn ServiceLink(props: &ServiceLinkProps) -> Html {
     let subdomain = if props.subdomain.is_empty() {props.link_name.to_lowercase()} else {props.subdomain.to_owned()};
 
     html! {
@@ -44,9 +44,6 @@ fn Link(props: &LinkProps) -> Html {
 
 #[function_component()]
 pub fn About() -> Html {
-    let navigator = use_navigator().unwrap();
-
-    let onclick = Callback::from(move |_| navigator.push(&Route::Root));
     html! {
         <>
             <main>
@@ -64,29 +61,32 @@ pub fn About() -> Html {
                     <strong>{"Services:"}</strong>
                     <table>
                         <tr/>
-                        <Link name="Music server"  link_name="musikcube"/>
-                        <Link name="Music sharing" link_name="slskd" cloudflare_access=true/>
-                        <Link name="Other sharing" link_name="qBittorrent"   subdomain="qb" cloudflare_access=true/>
-                        <Link name="File storage"  link_name="Nextcloud"/>
-                        <Link name="Documents"     link_name="paperless-ngx" subdomain="paperless"/>
-                        <Link name="Multimedia"    link_name="Emby"/>
+                        <ServiceLink name="Music server"  link_name="musikcube"/>
+                        <ServiceLink name="Music sharing" link_name="slskd" cloudflare_access=true/>
+                        <ServiceLink name="Other sharing" link_name="qBittorrent"   subdomain="qb" cloudflare_access=true/>
+                        <ServiceLink name="File storage"  link_name="Nextcloud"/>
+                        <ServiceLink name="Documents"     link_name="paperless-ngx" subdomain="paperless"/>
+                        <ServiceLink name="Multimedia"    link_name="Emby"/>
                     </table>
 
                     <strong>{"Oracle CI VMs:"}</strong>
                     <table>
                         <tr/>
-                        <Link name="Alpine Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
-                        <Link link_name="vm2.myalpine.live" subdomain="vm2" cloudflare_access=true>
+                        <ServiceLink name="Alpine Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
+                        <ServiceLink link_name="vm2.myalpine.live" subdomain="vm2" cloudflare_access=true>
                             {"Ubuntu ARM "}
                             <a href="https://github.com/m1k1o/neko">{"n.eko"}</a>
                             {" rooms/LLaMA WebUI"}
-                        </Link>
-                        <Link name="Ubuntu x86 testing" link_name="vm3.myalpine.live" subdomain="vm3"/>
+                        </ServiceLink>
+                        <ServiceLink name="Ubuntu x86 testing" link_name="vm3.myalpine.live" subdomain="vm3"/>
                     </table>
                 </div>
 
-                <footer>
-                    <button {onclick}>{"::<>"}</button>
+                <footer class="left">
+                    <Link<Route> to={Route::Generic {path: format!("::<{}>", random::random_type())}}>{"random!"}</Link<Route>>
+                </footer>
+                <footer class="right">
+                    <Link<Route> to={Route::Root}>{"::<>"}</Link<Route>>
                     <a href="https://github.com/romner-set/turbo.fish">{"code."}</a>
                 </footer>
             </main>

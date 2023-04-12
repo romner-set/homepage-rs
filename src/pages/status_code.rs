@@ -8,13 +8,10 @@ pub struct StatusCodeProps {
 
 #[function_component()]
 pub fn StatusCode(props: &StatusCodeProps) -> Html {
-    let navigator = use_navigator().unwrap();
-
     let code = if let Ok(c) = HttpStatusCode::from_u16(props.code) {c} else {
         HttpStatusCode::INTERNAL_SERVER_ERROR
     };
 
-    let onclick = Callback::from(move |_| navigator.push(&Route::Root));
     html! {
         <>
             <main>
@@ -23,8 +20,11 @@ pub fn StatusCode(props: &StatusCodeProps) -> Html {
                 </div>
                 <div class="status-code-body">{code.canonical_reason()}</div>
             </main>
-            <footer>
-                <button {onclick}>{"::<>"}</button>
+            <footer class="left">
+                <Link<Route> to={Route::Generic {path: format!("::<{}>", random::random_type())}}>{"random!"}</Link<Route>>
+            </footer>
+            <footer class="right">
+                <Link<Route> to={Route::About}>{"::<>"}</Link<Route>>
                 <a href="https://github.com/romner-set/turbo.fish">{"code."}</a>
             </footer>
         </>

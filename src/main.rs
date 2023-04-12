@@ -2,6 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 use http::status::StatusCode as HttpStatusCode;
 
+mod random;
 mod pages;
 use pages::{about::About, turbofish::Turbofish, status_code::StatusCode};
 
