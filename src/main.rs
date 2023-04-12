@@ -2,7 +2,7 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 
 mod pages;
-use pages::{about::About,turbofish::Turbofish};
+use pages::{about::About, turbofish::Turbofish};
 
 #[derive(Clone, Routable, PartialEq)]
 enum Route {

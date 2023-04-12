@@ -10,3 +10,5 @@ edition = "2021"
 yew = { version = "0.20.0", features = ["csr"] }
 yew-router = "0.17.0"
 urlencoding = "2.1.2"
+rand = "0.8.5"
+getrandom = { version = "0.2.9", features = ["js"] }
