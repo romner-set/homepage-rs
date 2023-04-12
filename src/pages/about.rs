@@ -75,12 +75,13 @@ pub fn About() -> Html {
                     <strong>{"Oracle CI VMs:"}</strong>
                     <table>
                         <tr/>
-                        <Link name="Alpine testing x86" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
+                        <Link name="Alpine Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
                         <Link link_name="vm2.myalpine.live" subdomain="vm2" cloudflare_access=true>
                             {"Ubuntu ARM "}
                             <a href="https://github.com/m1k1o/neko">{"n.eko"}</a>
                             {" rooms/LLaMA WebUI"}
                         </Link>
+                        <Link name="Ubuntu x86 testing" link_name="vm3.myalpine.live" subdomain="vm3"/>
                     </table>
                 </div>
 

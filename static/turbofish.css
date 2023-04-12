@@ -168,6 +168,9 @@ turbofish::after {
 body {
     height: 100dvh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 body main {
