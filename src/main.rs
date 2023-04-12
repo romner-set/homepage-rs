@@ -9,6 +9,10 @@ enum Route {
     #[not_found]
     #[at("/")]
     Turbofish,
+
+    #[at("/:path")]
+    TurbofishWithGuts {path: String},
+
     #[at("/about")]
     About,
 }
@@ -16,6 +20,9 @@ enum Route {
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Turbofish => html! {<Turbofish/>},
+        Route::TurbofishWithGuts{path} => html! {
+            <Turbofish path={urlencoding::decode(&path).unwrap_or_default().into_owned()}/>
+        },
         Route::About => html! {<About/>},
     }
 }
