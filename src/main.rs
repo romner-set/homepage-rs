@@ -13,11 +13,14 @@ enum Route {
     #[at("/")]
     Root,
 
- // #[at("/status/:path")]
- // Status {path: String},
+    #[at("/random")]
+    Random,
 
     #[at("/about")]
     About,
+
+    #[at("/status/:path")]
+    Status {path: String},
 
     #[at("/*path")]
     Generic {path: String},
@@ -26,12 +29,13 @@ enum Route {
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Root => html! {<Turbofish/>},
-     // Route::Status{path} =>
-     //     if let Ok(code) = HttpStatusCode::from_u16(path.parse().unwrap_or_default()) {
-     //         html! {<StatusCode code={code.as_u16()}/>}
-     //     } else {
-     //         html! {<StatusCode code=404/>}
-     //     }
+        Route::Status{path} =>
+            if let Ok(code) = HttpStatusCode::from_u16(path.parse().unwrap_or_default()) {
+                html! {<StatusCode code={code.as_u16()}/>}
+            } else {
+                html! {<StatusCode code=404/>}
+            }
+        Route::About => html! {<About/>},
         Route::Generic{path} => 
             if path.is_empty() {
                 html! {<Turbofish/>}
@@ -48,7 +52,11 @@ fn switch(routes: Route) -> Html {
                     html! {<StatusCode code=404/>}
                 }
             }
-        Route::About => html! {<About/>},
+        Route::Random =>
+            html! {
+                <Turbofish guts={random::random_type(&mut rand::prelude::thread_rng(),0)}/>
+            }
+            
     }
 }
 

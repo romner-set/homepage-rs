@@ -51,7 +51,7 @@ pub fn random_type(rng: &mut ThreadRng, recursion_depth: u8) -> String {
 
     if rtype.generics > 0 {
         generics.push('<');
-        for _ in 0..rtype.generics {
+        for _ in 0..(rtype.generics-1) {
             generics.push_str(&random_type(rng, recursion_depth+1));
             generics.push_str(", ");
         }
