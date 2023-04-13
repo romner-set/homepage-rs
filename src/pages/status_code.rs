@@ -14,7 +14,7 @@ pub fn StatusCode(props: &StatusCodeProps) -> Html {
 
     html! {
         <>
-            <title>{format!("::<> | {code}")}</title>
+            <title>{format!("::<{}> | {}", code.as_str(), code.canonical_reason().unwrap_or_default())}</title>
             <main>
                 <div class="status-code-head">
                     <turbofish>{code.as_str()}</turbofish>
