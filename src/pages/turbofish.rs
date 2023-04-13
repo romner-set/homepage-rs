@@ -6,7 +6,7 @@ const HIGHLIGHTED_CHARS: &str = "&<>()[];,";
 const HIGHLIGHT_EXCEPTIONS: &[&str] = &["()"]; // Don't highlight unit type
 
 enum MatchType {
-    Exact, StartsWith, None
+    Exact, StartsWith, LastStartsWith, None
 }
 
 #[derive(Properties, PartialEq)]
@@ -49,10 +49,20 @@ pub fn Turbofish(props: &TurbofishProps) -> Html {
                                             HIGHLIGHT_EXCEPTIONS.iter().for_each(|&s|
                                                 if s==&buf {match_type = MatchType::Exact; return}
                                                 else if s.starts_with(&buf) {match_type = MatchType::StartsWith}
+                                                else if s.starts_with(buf.chars().last().unwrap_or_default()) {match_type = MatchType::LastStartsWith}
                                             );
                                             match match_type {
                                                 MatchType::Exact => html!{for buf.drain(..)},
                                                 MatchType::StartsWith => html!{},
+                                                MatchType::LastStartsWith => html! { // Special case for &(), &m() and &mu()
+                                                    for buf.drain(..buf.len()-1).map(|_c| {
+                                                        if HIGHLIGHTED_CHARS.contains(_c) {
+                                                            html!{<span>{_c}</span>}
+                                                        } else {
+                                                            html!{_c}
+                                                        }
+                                                    })
+                                                },
                                                 MatchType::None => html! {
                                                     for buf.drain(..).map(|_c| {
                                                         if HIGHLIGHTED_CHARS.contains(_c) {
@@ -67,7 +77,7 @@ pub fn Turbofish(props: &TurbofishProps) -> Html {
                                         MatchType::Exact => html! {
                                             html!{<span>{for buf.drain(..)}</span>}
                                         },
-                                        MatchType::StartsWith => html!{}
+                                        _ => html!{}
                                     }
                                 })}
                             }}}
