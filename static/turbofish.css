@@ -42,6 +42,18 @@ footer.right {
     border-width: 1px 0 0 1px;
 }
 
+footer button {
+  background: none!important;
+  border: none;
+  color: #fff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+footer button:hover {
+    color: #ddd;
+}
+
 footer a {
     position: relative;
     color: #fff;
@@ -161,6 +173,10 @@ h.reverse::before, h.reverse::after {
     font-size: 400%;
     display: flex;
     padding-bottom: 0.25em;
+}
+
+span {
+    color: #fff;
 }
 
 turbofish {

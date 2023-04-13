@@ -1,52 +1,63 @@
-// https://github.com/jplatte/turbo.fish/blob/main/src/random.rs
-
-use itertools::Itertools;
 use rand::{prelude::ThreadRng, seq::SliceRandom};
-use std::borrow::Cow;
 
-const RECURSION_LIMIT: u8 = 1;
-
-const TYPES: &[&[&str]] = &[
-    &["_"],
-    &["bool"],
-    &["char"],
-    &["i8"],
-    &["i16"],
-    &["i32"],
-    &["i64"],
-    &["isize"],
-    &["u8"],
-    &["u16"],
-    &["u32"],
-    &["u64"],
-    &["usize"],
-    &["f32"],
-    &["f64"],
-    &["&str"],
-    &["String"],
-    &["()"],
-    &["&", ""],
-    &["&mut ", ""],
-    &["[", "]"],
-    &["Box<", ">"],
-    &["Vec<", ">"],
-    &["HashSet<", ">"],
-    &["Result<", ", ", ">"],
-    &["HashMap<", ", ", ">"],
-];
-
-pub fn random_type() -> String {
-    random_type_depth(0, &mut rand::prelude::thread_rng())
+struct TypeDef {
+    name: &'static str,
+    generics: u8,
+}
+impl TypeDef {
+    const fn new(name: &'static str, generics: u8) -> Self {
+        Self {name, generics}
+    }
 }
 
-fn random_type_depth(depth: u8, rng: &mut ThreadRng) -> String {
-    let &ty = TYPES.choose(rng).unwrap();
-    Itertools::intersperse_with(ty.iter().map(|&x| Cow::Borrowed(x)), || {
-        if depth == RECURSION_LIMIT {
-            "_".into()
-        } else {
-            random_type_depth(depth + 1, rng).into()
+const RECURSION_LIMIT: u8 = 1;
+const ARRAY_CHANCE: f64 = 0.1;
+const TYPES: &[TypeDef] = &[
+    TypeDef::new("_", 0),
+    TypeDef::new("bool", 0),
+    TypeDef::new("char", 0),
+    TypeDef::new("i8", 0),
+    TypeDef::new("i16", 0),
+    TypeDef::new("i32", 0),
+    TypeDef::new("i64", 0),
+    TypeDef::new("isize", 0),
+    TypeDef::new("u8", 0),
+    TypeDef::new("u16", 0),
+    TypeDef::new("u32", 0),
+    TypeDef::new("u64", 0),
+    TypeDef::new("usize", 0),
+    TypeDef::new("f32", 0),
+    TypeDef::new("f64", 0),
+    TypeDef::new("&str", 0),
+    TypeDef::new("String", 0),
+    TypeDef::new("()", 0),
+    TypeDef::new("Box", 1),
+    TypeDef::new("Vec", 1),
+    TypeDef::new("HashSet", 1),
+    TypeDef::new("Result", 2),
+    TypeDef::new("HashMap", 2),
+];
+
+pub fn random_type(rng: &mut ThreadRng, recursion_depth: u8) -> String {
+    let mut rtype = TYPES.choose(rng).unwrap();
+
+    if recursion_depth >= RECURSION_LIMIT {
+        while rtype.generics != 0 {
+            rtype = TYPES.choose(rng).unwrap();
         }
-    })
-    .collect()
+    }
+
+    let mut generics = String::new();
+
+    if rtype.generics > 0 {
+        generics.push('<');
+        for _ in 0..rtype.generics {
+            generics.push_str(&random_type(rng, recursion_depth+1));
+            generics.push_str(", ");
+        }
+        generics.push_str(&random_type(rng, recursion_depth+1));
+        generics.push('>');
+    }
+    
+    format!("{}{generics}", rtype.name)
 }

@@ -2,9 +2,11 @@ use yew::prelude::*;
 use yew_router::prelude::*;
 use http::status::StatusCode as HttpStatusCode;
 
-mod random;
+mod footer;
+use footer::Footer;
 mod pages;
 use pages::{about::About, turbofish::Turbofish, status_code::StatusCode};
+mod random;
 
 #[derive(Clone, Routable, PartialEq)]
 enum Route {
@@ -39,7 +41,7 @@ fn switch(routes: Route) -> Html {
                 if dpath.chars().last() == Some('>') // Has to be first, the second check
                 && &dpath.as_str()[..3] == "::<" {   // errors if run on an empty path
                     html! {<Turbofish guts={dpath[3..dpath.len()-1].to_owned()}/>}
-                } else if path.chars().next() == Some('<')
+                } else if dpath.chars().next() == Some('<')
                 && &dpath.as_str()[dpath.len()-3..] == ">::" {
                     html! {<Turbofish guts={dpath[1..dpath.len()-3].to_owned()}/>}
                 } else {

@@ -46,6 +46,7 @@ fn ServiceLink(props: &ServiceLinkProps) -> Html {
 pub fn About() -> Html {
     html! {
         <>
+            <title>{format!("::<> | About")}</title>
             <main>
                 <h1 class="fish-head">{"about::"}<turbofish>{"myalpine.live"}</turbofish>{"()"}</h1>
 
@@ -81,15 +82,8 @@ pub fn About() -> Html {
                         <ServiceLink name="Ubuntu x86 testing" link_name="vm3.myalpine.live" subdomain="vm3"/>
                     </table>
                 </div>
-
-                <footer class="left">
-                    <Link<Route> to={Route::Generic {path: format!("::<{}>", random::random_type())}}>{"random!"}</Link<Route>>
-                </footer>
-                <footer class="right">
-                    <Link<Route> to={Route::Root}>{"::<>"}</Link<Route>>
-                    <a href="https://github.com/romner-set/turbo.fish">{"code."}</a>
-                </footer>
             </main>
+            <Footer root_link=true/>
         </>
     }
 }
