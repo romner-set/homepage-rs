@@ -1,7 +1,7 @@
 use rand::Rng;
 use crate::*;
 
-const HIGHLIGHTED_STRINGS: &[&str] = &["&mut"];
+const HIGHLIGHTED_STRINGS: &[&str] = &["&mut", "*mut", "&*mut", "*const", "&*const", "dyn"];
 const HIGHLIGHTED_CHARS: &str = "&<>()[];,";
 const HIGHLIGHT_EXCEPTIONS: &[&str] = &["()"]; // Don't highlight unit type
 

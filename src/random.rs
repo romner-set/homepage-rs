@@ -12,7 +12,8 @@ impl TypeDef {
 
 const RECURSION_LIMIT: u8 = 1;
 const REF_CHANCE: f64 = 0.25;
-const MUTREF_CHANCE: f64 = 0.25;
+const PTR_CHANCE: f64 = 0.125;
+const MUT_CHANCE: f64 = 0.25;
 const ARRAY_CHANCE: f64 = 0.05;
 const TUPLE_CHANCE: f64 = 0.1;
 const TYPES: &[TypeDef] = &[
@@ -36,7 +37,9 @@ const TYPES: &[TypeDef] = &[
     TypeDef::new("String", 0),
     TypeDef::new("()", 0),
     TypeDef::new("Box", 1),
+    TypeDef::new("Box<dyn Error>",0),
     TypeDef::new("Vec", 1),
+    TypeDef::new("Arc", 1),
     TypeDef::new("HashSet", 1),
     TypeDef::new("Result", 2),
     TypeDef::new("HashMap", 2),
@@ -57,10 +60,14 @@ pub fn random_type(rng: &mut ThreadRng, mut recursion_depth: u8) -> String {
 
     let mut ref_add = |r: &mut String| {
         while REF_CHANCE > rng.gen() {
-            if MUTREF_CHANCE > rng.gen() {r.push_str("&mut ")}
-            else {r.push('&')}
+            if PTR_CHANCE > rng.gen() {
+                if MUT_CHANCE > rng.gen() {r.push_str("*mut ")}
+                else {r.push_str("*const ")}
+            } else {
+                if MUT_CHANCE > rng.gen() {r.push_str("&mut ")}
+                else {r.push('&')}
+            }
         }
-       
     };
 
     ref_add(&mut ret);
