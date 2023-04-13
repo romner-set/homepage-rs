@@ -11,10 +11,13 @@ impl TypeDef {
 }
 
 const RECURSION_LIMIT: u8 = 1;
-const REF_CHANCE: f64 = 0.2;
+const REF_CHANCE: f64 = 0.25;
+const MUTREF_CHANCE: f64 = 0.25;
 const ARRAY_CHANCE: f64 = 0.05;
+const TUPLE_CHANCE: f64 = 0.1;
 const TYPES: &[TypeDef] = &[
     TypeDef::new("_", 0),
+    TypeDef::new("!", 0),
     TypeDef::new("bool", 0),
     TypeDef::new("char", 0),
     TypeDef::new("i8", 0),
@@ -39,7 +42,7 @@ const TYPES: &[TypeDef] = &[
     TypeDef::new("HashMap", 2),
 ];
 
-pub fn random_type(rng: &mut ThreadRng, recursion_depth: u8) -> String {
+pub fn random_type(rng: &mut ThreadRng, mut recursion_depth: u8) -> String {
     let mut rtype = TYPES.choose(rng).unwrap();
 
     if recursion_depth >= RECURSION_LIMIT {
@@ -50,23 +53,37 @@ pub fn random_type(rng: &mut ThreadRng, recursion_depth: u8) -> String {
 
     let mut ret = String::new();
     let is_array = ARRAY_CHANCE > rng.gen();
+    let is_tuple = TUPLE_CHANCE > rng.gen();
 
     let mut ref_add = |r: &mut String| {
-        if REF_CHANCE > rng.gen() {r.push('&')}
-        else if REF_CHANCE > rng.gen() {r.push_str("&mut ")}
+        while REF_CHANCE > rng.gen() {
+            if MUTREF_CHANCE > rng.gen() {r.push_str("&mut ")}
+            else {r.push('&')}
+        }
+       
     };
 
     ref_add(&mut ret);
     if is_array {
-        ret.push_str(&format!("["));
+        recursion_depth +=1 ;
+        ret.push('[');
         ref_add(&mut ret);
+    }
+
+    if is_tuple {
+        recursion_depth +=1 ;
+        ret.push('(');
+        for _ in 0..rng.gen_range(1..=2) {
+            ret.push_str(&random_type(rng, recursion_depth));
+            ret.push_str(", ");
+        }
     }
 
     ret.push_str(rtype.name);
 
     if rtype.generics > 0 {
         ret.push('<');
-        for _ in 0..rtype.generics {
+        for _ in 0..rtype.generics-1 {
             ret.push_str(&random_type(rng, recursion_depth+1));
             ret.push_str(", ");
         }
@@ -76,6 +93,9 @@ pub fn random_type(rng: &mut ThreadRng, recursion_depth: u8) -> String {
 
     if is_array {
         ret.push_str(&format!("; {}]", rng.gen::<u8>()));
+    }
+    if is_tuple {
+        ret.push(')');
     }
 
     ret

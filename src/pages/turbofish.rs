@@ -67,7 +67,7 @@ pub fn Turbofish(props: &TurbofishProps) -> Html {
                                                 <>
                                                     if !mutref_buffer.is_empty() {{clear_mutrefb(&mut mutref_buffer,0)}}
                                                     {match c {
-                                                        '<'|'>'|','|'['|']' => html! {<span>{c}</span>},
+                                                        '<'|'>'|','|'['|']'|';' => html! {<span>{c}</span>},
                                                         c => html! {c},
                                                     }}
                                                 </>
