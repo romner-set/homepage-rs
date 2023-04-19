@@ -68,6 +68,7 @@ pub fn About() -> Html {
                         <ServiceLink name="File storage"  link_name="Nextcloud"/>
                         <ServiceLink name="Documents"     link_name="paperless-ngx" subdomain="paperless"/>
                         <ServiceLink name="Multimedia"    link_name="Emby"/>
+                        <ServiceLink name="Factorio calc" link_name="fcalc"/>
                     </table>
 
                     <strong>{"Oracle CI VMs:"}</strong>
