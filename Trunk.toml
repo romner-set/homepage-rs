@@ -1,0 +1,7 @@
+[build]
+filehash = false
+
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = ["-c", "tmpf=$(mktemp); wasm-opt -Oz -o $tmpf $TRUNK_STAGING_DIR/turbofish_bg.wasm && mv $tmpf $TRUNK_STAGING_DIR/turbofish_bg.wasm && chmod 0644 $TRUNK_STAGING_DIR/turbofish_bg.wasm || true"]
