@@ -53,8 +53,8 @@ pub fn About() -> Html {
                 <div class="fish-body">
                     <p>
                         {"A personal website going through a "}
-                        <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/">{"Cloudflare tunnel"}</a>
-                        {" to a self-hosted Alpine linux server running some stuff. Animation & styling were taken from "}
+                        <a href="https://github.com/rapiz1/rathole">{"rathole"}</a>
+                        {" reverse proxy to a self-hosted Alpine linux server running some stuff. Animation & styling were taken from "}
                         <a href="https://turbo.fish/">{"turbo.fish"}</a>
                         {", go check it out!"}
                     </p>
@@ -63,8 +63,8 @@ pub fn About() -> Html {
                     <table>
                         <tr/>
                         <ServiceLink name="Music server"  link_name="musikcube"/>
-                        <ServiceLink name="Music sharing" link_name="slskd" cloudflare_access=true/>
-                        <ServiceLink name="Other sharing" link_name="qBittorrent"   subdomain="qb" cloudflare_access=true/>
+                        <ServiceLink name="Music sharing" link_name="slskd"/>
+                        <ServiceLink name="Other sharing" link_name="qBittorrent"   subdomain="qb"/>
                         <ServiceLink name="File storage"  link_name="Nextcloud"/>
                         <ServiceLink name="Documents"     link_name="paperless-ngx" subdomain="paperless"/>
                         <ServiceLink name="Multimedia"    link_name="Emby"/>
@@ -74,13 +74,8 @@ pub fn About() -> Html {
                     <strong>{"Oracle CI VMs:"}</strong>
                     <table>
                         <tr/>
-                        <ServiceLink name="Alpine Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
-                        <ServiceLink link_name="vm2.myalpine.live" subdomain="vm2" cloudflare_access=true>
-                            {"Ubuntu ARM "}
-                            <a href="https://github.com/m1k1o/neko">{"n.eko"}</a>
-                            {" rooms/LLaMA WebUI"}
-                        </ServiceLink>
-                        <ServiceLink name="Ubuntu x86 testing" link_name="vm3.myalpine.live" subdomain="vm3"/>
+                        <ServiceLink name="Arch Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
+                        <ServiceLink name="Alpine x86 file hosting & rathole" link_name="vm2.myalpine.live" subdomain="vm2"/>
                     </table>
                 </div>
             </main>
