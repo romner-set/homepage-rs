@@ -11,9 +11,6 @@ pub struct ServiceLinkProps {
     subdomain: &'static str,
 
     #[prop_or_default]
-    cloudflare_access: bool,
-
-    #[prop_or_default]
     children: Children,
 }
 
@@ -35,9 +32,6 @@ fn ServiceLink(props: &ServiceLinkProps) -> Html {
                     {props.link_name}
                 </a>
             </td>
-            if props.cloudflare_access {
-                <td>{"(Cloudflare Access-secured)"}</td>
-            }
         </tr>
     }
 }
@@ -63,6 +57,7 @@ pub fn About() -> Html {
                     <table>
                         <tr/>
                         <ServiceLink name="Music server"  link_name="musikcube"/>
+                        <ServiceLink name="Music web streaming" link_name="ampache"/>
                         <ServiceLink name="Music sharing" link_name="slskd"/>
                         <ServiceLink name="Other sharing" link_name="qBittorrent"   subdomain="qb"/>
                         <ServiceLink name="File storage"  link_name="Nextcloud"/>
@@ -74,7 +69,7 @@ pub fn About() -> Html {
                     <strong>{"Oracle CI VMs:"}</strong>
                     <table>
                         <tr/>
-                        <ServiceLink name="Arch Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1" cloudflare_access=true/>
+                        <ServiceLink name="Arch Linux x86 testing" link_name="vm1.myalpine.live" subdomain="vm1"/>
                         <ServiceLink name="Alpine x86 file hosting & rathole" link_name="vm2.myalpine.live" subdomain="vm2"/>
                     </table>
                 </div>
