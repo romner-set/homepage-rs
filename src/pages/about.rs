@@ -57,7 +57,7 @@ pub fn About() -> Html {
                     <table>
                         <tr/>
                         <ServiceLink name="Music server"  link_name="musikcube"/>
-                        <ServiceLink name="Music web streaming" link_name="mstream"/>
+                        <ServiceLink name="Music web streaming" link_name="koel"/>
                         <ServiceLink name="Music sharing" link_name="slskd"/>
                         <ServiceLink name="Other sharing" link_name="qBittorrent"   subdomain="qb"/>
                         <ServiceLink name="File storage"  link_name="Nextcloud"/>
