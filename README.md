@@ -1,6 +1,6 @@
 ## Code for my [humble website](https://myalpine.live)
 
-Styling & turbofish animations are from https://github.com/jplatte/turbo.fish. The code itself was completely rewritten in [https://yew.rs](yew), because why write HTML when you can write Rust?
+Styling & turbofish animations are from https://github.com/jplatte/turbo.fish. The code itself was completely rewritten in [https://yew.rs](https://yew.rs), because why write HTML when you can write Rust?
 
 ### Commands to run a dev server:
 ```sh
